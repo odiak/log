@@ -1,0 +1,7 @@
+runtime: nodejs10
+entrypoint: ./node_modules/.bin/next start -p $PORT
+handlers:
+  - url: /.*
+    secure: always
+    redirect_http_response_code: 301
+    script: auto
