@@ -27,5 +27,15 @@ export const postService = {
     const qs = await q.get()
     const posts = (qs.docs as any[]).map((d) => decodePost(d))
     return { posts: posts.slice(0, limit), hasNext: posts.length <= limit }
+  },
+
+  async deletePost(id: string): Promise<void> {
+    await firebase.firestore().collection('posts').doc(id).delete()
+  },
+
+  async updatePost(id: string, update: { body: string }): Promise<Post> {
+    const ref = firebase.firestore().collection('posts').doc(id)
+    await ref.update(update)
+    return decodePost(await ref.get())
   }
 }

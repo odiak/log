@@ -2,6 +2,10 @@
   margin-top: 10px;
   padding: 10px;
   background-color: #eee9;
+
+  &:hover .buttons {
+    opacity: 1;
+  }
 }
 
 .date {
@@ -10,4 +14,21 @@
   a:hover {
     color: #888;
   }
+}
+
+.buttons {
+  float: right;
+  opacity: 0.2;
+
+  button {
+    margin-left: 4px;
+  }
+}
+
+.textarea {
+  margin-top: 10px;
+  display: block;
+  resize: vertical;
+  min-height: 200px;
+  width: 100%;
 }

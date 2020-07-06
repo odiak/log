@@ -3,7 +3,7 @@ import { postService as adminPostService } from '../services/admin/postService'
 import { postService as clientPostService } from '../services/client/postService'
 import { Post } from '../services/common/Post'
 import { useState, useEffect } from 'react'
-import { ShowPost } from '../components/ShowPost'
+import { ShowPost, ShowPostEditable } from '../components/ShowPost'
 import css from './index.module.scss'
 import { authService } from '../services/client/authService'
 
@@ -54,9 +54,20 @@ const Home = ({
           </button>
         </div>
       )}
-      {posts.map((post) => (
-        <ShowPost key={post.id} post={post} />
-      ))}
+      {isAuthenticated
+        ? posts.map((post) => (
+            <ShowPostEditable
+              key={post.id}
+              post={post}
+              onDelete={() => {
+                setPosts((ps) => ps.filter((p) => p.id !== post.id))
+              }}
+              onUpdate={(newPost) => {
+                setPosts((ps) => ps.map((p) => (p.id === post.id ? newPost : p)))
+              }}
+            />
+          ))
+        : posts.map((post) => <ShowPost key={post.id} post={post} />)}
       {!hasNext && (
         <button
           className={css.loadMore}
