@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { ShowPost, ShowPostEditable } from '../components/ShowPost'
 import css from './index.module.scss'
 import { authService } from '../services/client/authService'
+import TextareaAutosize from 'react-textarea-autosize'
 
 const Home = ({
   posts: initialPosts,
@@ -34,13 +35,14 @@ const Home = ({
     <>
       {isAuthenticated && (
         <div>
-          <textarea
+          <TextareaAutosize
+            minRows={3}
             className={css.textarea}
             value={body}
             onChange={(e) => {
               setBody(e.target.value)
             }}
-          ></textarea>
+          ></TextareaAutosize>
           <button
             onClick={() => {
               ;(async () => {

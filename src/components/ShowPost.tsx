@@ -5,6 +5,7 @@ import Link from 'next/link'
 import css from './ShowPost.module.scss'
 import { format } from 'date-fns'
 import { postService } from '../services/client/postService'
+import TextareaAutosize from 'react-textarea-autosize'
 
 const markdownOptions: MarkedOptions = {
   breaks: true,
@@ -81,13 +82,14 @@ export const ShowPostEditable: FC<{
         </Link>
       </div>
       {isEditing ? (
-        <textarea
+        <TextareaAutosize
+          minRows={4}
           className={css.textarea}
           value={bodyDraft}
           onChange={(e) => {
             setBodyDraft(e.target.value)
           }}
-        ></textarea>
+        ></TextareaAutosize>
       ) : (
         <div dangerouslySetInnerHTML={{ __html: marked(post.body, markdownOptions) }}></div>
       )}
