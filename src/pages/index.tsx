@@ -7,6 +7,8 @@ import { ShowPost, ShowPostEditable } from '../components/ShowPost'
 import css from './index.module.scss'
 import { authService } from '../services/client/authService'
 import TextareaAutosize from 'react-textarea-autosize'
+import { Title } from '../components/Title'
+import { useIsAuthenticated } from '../utils/useIsAuthenticated'
 
 const Home = ({
   posts: initialPosts,
@@ -17,22 +19,18 @@ const Home = ({
 }) => {
   const [posts, setPosts] = useState(initialPosts)
   const [body, setBody] = useState('')
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [hasNext, setHasNext] = useState(initialHasNext)
+
+  const isAuthenticated = useIsAuthenticated()
 
   useEffect(() => {
     setPosts(initialPosts)
   }, [initialPosts])
 
-  useEffect(() => {
-    return authService.onAuthStateChanged(({ signedIn }) => {
-      setIsAuthenticated(signedIn)
-    })
-  }, [initialPosts])
-
   return (
     <>
+      <Title>Home</Title>
       {isAuthenticated && (
         <div>
           <TextareaAutosize
